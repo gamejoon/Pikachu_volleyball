@@ -1,4 +1,5 @@
 from pico2d import *
+import random
 
 screen_width = 432
 screen_height = 304
@@ -31,6 +32,21 @@ class Volleyball_Net:
     def draw(self):
         self.image.draw(self.x, self.y)
 
+class Cloud:
+    def __init__(self, x):
+        self.width = 48
+        self.height = 24
+        self.x = x
+        self.y = random.randint(screen_height // 2, screen_height)
+        self.image = load_image("D:\\github\\pikachu_volleyball\\Picture\\cloud.png")
+        self.speed = 5
+    
+    def update(self):
+        self.x += self.speed
+
+    def draw(self):
+        self.image.draw(self.x, self.y)
+
 def handle_events():
     global running
 
@@ -45,16 +61,19 @@ def handle_events():
 def create_world():
     global background
     global volleyball_net
-    global cloud, clouds
+    global clouds
 
     background = Background()
     volleyball_net = Volleyball_Net()
+    clouds = [Cloud(0) for _ in range(30)]
 
 def render_world():
     clear_canvas()
 
     background.draw()
     volleyball_net.draw()
+    for o in range(len(clouds)):
+        clouds[o].draw()
     
     update_canvas()
 
