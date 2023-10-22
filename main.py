@@ -15,12 +15,12 @@ def create_world():
     global background
     global volleyball_net
 
-    background = load_image("D:\\github\\pikachu_volleyball\\Picture\\background.png")
+    background = load_image("D:\\github\\pikachu_volleyball\\Picture\\background.png") # width = 432, height = 304
     volleyball_net = load_image("D:\\github\\pikachu_volleyball\\Picture\\volleyball_net.png") # width = 8, height = 112
 
 def render_world():
     background.draw(432 // 2, 304 // 2)
-    volleyball_net.draw(432 // 2, 304 // 2)
+    volleyball_net.draw(432 // 2, 32 + 112 // 2)
 
 open_canvas(432, 304)
 create_world()
