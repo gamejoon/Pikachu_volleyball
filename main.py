@@ -39,7 +39,7 @@ class Cloud:
         self.x = x
         self.y = random.randint(screen_height // 2, screen_height)
         self.image = load_image("D:\\github\\pikachu_volleyball\\Picture\\cloud.png")
-        self.speed = 5
+        self.speed = 1
     
     def update(self):
         self.x += self.speed
@@ -67,6 +67,16 @@ def create_world():
     volleyball_net = Volleyball_Net()
     clouds = [Cloud(0) for _ in range(30)]
 
+def update_world():
+    global background
+    global volleyball_net
+    global clouds
+
+    background.update()
+    volleyball_net.update()
+    for o in range(len(clouds)):
+        clouds[o].update()
+
 def render_world():
     clear_canvas()
 
@@ -84,6 +94,7 @@ running = True
 
 while running:
     handle_events()
+    update_world()
     render_world()
 
 close_canvas()
