@@ -65,7 +65,7 @@ def create_world():
 
     background = Background()
     volleyball_net = Volleyball_Net()
-    clouds = [Cloud(0) for _ in range(30)]
+    clouds = [Cloud(random.randint(0, screen_width)) for _ in range(30)]
 
 def update_world():
     global background
@@ -76,6 +76,7 @@ def update_world():
     volleyball_net.update()
     for o in range(len(clouds)):
         clouds[o].update()
+    delay(0.05)
 
 def render_world():
     clear_canvas()
