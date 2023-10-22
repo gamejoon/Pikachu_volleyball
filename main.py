@@ -11,14 +11,18 @@ def handle_events():
         elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
             running = False
 
+def create_world():
+    global background
+
+    background = load_image("D:\\github\\pikachu_volleyball\\Picture\\background.png")
+
 def render_world():
     background.draw(432 // 2, 304 // 2)
 
 open_canvas(432, 304)
+create_world()
 
 running = True
-
-background = load_image("D:\\github\\pikachu_volleyball\\Picture\\background.png")
 
 while running:
     handle_events()
