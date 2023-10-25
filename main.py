@@ -1,23 +1,10 @@
 from pico2d import *
 import random
 from math import cos, radians
+from background import Background
 
 screen_width = 432
 screen_height = 304
-
-class Background:
-    def __init__(self):
-        self.width = screen_width
-        self.height = screen_height
-        self.x = self.width // 2
-        self.y = self.height // 2
-        self.image = load_image("background.png")
-    
-    def update(self):
-        pass
-
-    def draw(self):
-        self.image.draw(self.x, self.y)
 
 class Volleyball_Net:
     def __init__(self):
@@ -67,7 +54,7 @@ def create_world():
     global volleyball_net
     global clouds
 
-    background = Background()
+    background = Background(screen_width, screen_height)
     volleyball_net = Volleyball_Net()
     clouds = [Cloud(random.randint(0, screen_width)) for _ in range(random.randint(10, 15))]
 
