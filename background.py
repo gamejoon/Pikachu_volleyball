@@ -1,4 +1,4 @@
-from pico2d import *
+from pico2d import load_image
 
 class Background:
     def __init__(self, screen_width, screen_height):
