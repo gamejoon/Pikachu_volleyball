@@ -19,39 +19,44 @@ def handle_events():
             running = False
 
 def create_world():
+    global running
     global background
     global volleyball_net
     global clouds
+    global game_world
 
+    running = True
+    
+    game_world = []
+    
     background = Background(screen_width, screen_height)
+    game_world.append(background)
+    
     volleyball_net = Volleyball_Net(screen_width, screen_height)
+    game_world.append(volleyball_net)
+    
     clouds = [Cloud(random.randint(0, screen_width), screen_width, screen_height) for _ in range(random.randint(10, 15))]
-
+    game_world += clouds
+    
 def update_world():
     global background
     global volleyball_net
     global clouds
 
-    background.update()
-    volleyball_net.update()
-    for o in range(len(clouds)):
-        clouds[o].update()
+    for o in game_world:
+        o.update()
     delay(0.05)
 
 def render_world():
     clear_canvas()
 
-    background.draw()
-    volleyball_net.draw()
-    for o in range(len(clouds)):
-        clouds[o].draw()
+    for o in game_world:
+        o.draw()
     
     update_canvas()
 
-open_canvas(432, 304)
+open_canvas(screen_width, screen_height)
 create_world()
-
-running = True
 
 while running:
     handle_events()
