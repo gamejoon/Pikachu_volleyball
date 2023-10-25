@@ -5,10 +5,12 @@ from random import randint
 class Cloud:
     image = None
     def __init__(self, x, screen_width, screen_height):
+        self.screen_width = screen_width
+        self.screen_height = screen_height
         self.width = 48
         self.height = 24
         self.x = x
-        self.y = randint(screen_height // 2, screen_height)
+        self.y = randint(self.screen_height // 2, self.screen_height)
         self.speed = 1
         self.theta = randint(1, 360)
         if Cloud.image == None:
@@ -16,7 +18,9 @@ class Cloud:
     
     def update(self):
         self.x += self.speed
-        self.theta = (self.theta + 10) % 360 
+        self.theta = (self.theta + 10) % 360
+        if self.x - self.width // 2 > self.screen_width:
+            self.x = 0 - self.width // 2 - randint(0, 50)
 
     def draw(self):
         self.image.draw(self.x, self.y, (int)(self.width * (1 + 0.2 * cos(radians(self.theta)))), (int)(self.height * (1 + 0.2 * cos(radians(self.theta)))))
