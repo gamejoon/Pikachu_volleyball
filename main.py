@@ -1,29 +1,11 @@
 from pico2d import *
 import random
-from math import cos, radians
 from background import Background
 from volleyball_net import Volleyball_Net
+from cloud import Cloud
 
 screen_width = 432
 screen_height = 304
-
-class Cloud:
-    def __init__(self, x):
-        self.width = 48
-        self.height = 24
-        self.x = x
-        self.y = random.randint(screen_height // 2, screen_height)
-        self.image = load_image("cloud.png")
-        self.speed = 1
-        self.theta = random.randint(1, 360)
-    
-    def update(self):
-        self.x += self.speed
-        self.theta = (self.theta + 10) % 360 
-
-    def draw(self):
-        self.image.draw(self.x, self.y, (int)(self.width * (1 + 0.2 * math.cos(math.radians(self.theta)))), (int)(self.height * (1 + 0.2 * math.cos(math.radians(self.theta)))))
-        # cloud.size * (1 + 0.2 * cos(theta))
         
 def handle_events():
     global running
@@ -43,7 +25,7 @@ def create_world():
 
     background = Background(screen_width, screen_height)
     volleyball_net = Volleyball_Net(screen_width, screen_height)
-    clouds = [Cloud(random.randint(0, screen_width)) for _ in range(random.randint(10, 15))]
+    clouds = [Cloud(random.randint(0, screen_width), screen_width, screen_height) for _ in range(random.randint(10, 15))]
 
 def update_world():
     global background
