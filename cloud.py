@@ -3,14 +3,16 @@ from math import cos, radians
 from random import randint
 
 class Cloud:
+    image = None
     def __init__(self, x, screen_width, screen_height):
         self.width = 48
         self.height = 24
         self.x = x
         self.y = randint(screen_height // 2, screen_height)
-        self.image = load_image("cloud.png")
         self.speed = 1
         self.theta = randint(1, 360)
+        if Cloud.image == None:
+            Cloud.image = load_image("cloud.png")
     
     def update(self):
         self.x += self.speed
