@@ -3,6 +3,7 @@ import random
 from background import Background
 from volleyball_net import Volleyball_Net
 from cloud import Cloud
+import game_world
 
 screen_width = 432
 screen_height = 304
@@ -27,31 +28,28 @@ def create_world():
 
     running = True
     
-    game_world = []
-    
     background = Background(screen_width, screen_height)
-    game_world.append(background)
+    game_world.add(background)
     
     volleyball_net = Volleyball_Net(screen_width, screen_height)
-    game_world.append(volleyball_net)
+    game_world.add(volleyball_net)
     
     clouds = [Cloud(random.randint(0, screen_width), screen_width, screen_height) for _ in range(random.randint(10, 15))]
-    game_world += clouds
+    for o in clouds:
+        game_world.add(o)
     
 def update_world():
     global background
     global volleyball_net
     global clouds
 
-    for o in game_world:
-        o.update()
+    game_world.update()
     delay(0.05)
 
 def render_world():
     clear_canvas()
 
-    for o in game_world:
-        o.draw()
+    game_world.render()
     
     update_canvas()
 
