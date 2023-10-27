@@ -1,16 +1,12 @@
-objects = []
+object = []
 
 def add(o):
-    objects.append(o)
+    object.append(o)
     
 def update():
-    for o in objects:
+    for o in object:
         o.update()
 
 def render():
-    for o in objects:
+    for o in object:
         o.draw()
-
-def remove_object(o):
-    if o in objects:
-        objects.remove(o)

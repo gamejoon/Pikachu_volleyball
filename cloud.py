@@ -1,7 +1,6 @@
 from pico2d import load_image
 from math import cos, radians
 from random import randint
-import game_world
 
 class Cloud:
     image = None
@@ -21,8 +20,7 @@ class Cloud:
         self.x += self.speed
         self.theta = (self.theta + 10) % 360
         if self.x - self.width // 2 > self.screen_width:
-            game_world.remove_object(self)
-            print("remove")
+            self.x = 0 - self.width // 2 - randint(0, 50)
 
     def draw(self):
         self.image.draw(self.x, self.y, (int)(self.width * (1 + 0.2 * cos(radians(self.theta)))), (int)(self.height * (1 + 0.2 * cos(radians(self.theta)))))
