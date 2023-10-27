@@ -20,7 +20,8 @@ class Cloud:
         self.x += self.speed
         self.theta = (self.theta + 10) % 360
         if self.x - self.width // 2 > self.screen_width:
-            self.x = 0 - self.width // 2 - randint(0, 50)
+            self.x = randint(-self.screen_width // 2, 0 - self.width)
+            self.y = randint(self.screen_height // 2, self.screen_height)
 
     def draw(self):
         self.image.draw(self.x, self.y, (int)(self.width * (1 + 0.2 * cos(radians(self.theta)))), (int)(self.height * (1 + 0.2 * cos(radians(self.theta)))))

@@ -34,23 +34,16 @@ def create_world():
     volleyball_net = Volleyball_Net(screen_width, screen_height)
     game_world.add(volleyball_net)
     
-    clouds = [Cloud(random.randint(0, screen_width), screen_width, screen_height) for _ in range(random.randint(10, 15))]
-    for o in clouds:
-        game_world.add(o)
+    clouds = [Cloud(random.randint(-screen_width // 2, screen_width), screen_width, screen_height) for _ in range(20)]
+    game_world.objects += clouds
     
 def update_world():
-    global background
-    global volleyball_net
-    global clouds
-
     game_world.update()
     delay(0.05)
 
 def render_world():
     clear_canvas()
-
     game_world.render()
-    
     update_canvas()
 
 open_canvas(screen_width, screen_height)
@@ -60,5 +53,6 @@ while running:
     handle_events()
     update_world()
     render_world()
+    # print(game_world.objects)
 
 close_canvas()
