@@ -10,7 +10,7 @@ class Cloud:
         self.height = 24
         self.x = x
         self.y = randint(self.screen_height // 2, self.screen_height)
-        self.speed = 1
+        self.speed = randint(1, 3)
         self.sizediff = randint(0, 10)
         if Cloud.image == None:
             Cloud.image = load_image("cloud.png")
@@ -21,6 +21,7 @@ class Cloud:
         if self.x - (self.width + self.func_sizediff()) // 2 > self.screen_width:
             self.x = randint(self.screen_width - 500, 0 - self.width)
             self.y = randint(self.screen_height // 2, self.screen_height)
+            self.speed = randint(1, 3)
 
     def draw(self):
         self.image.draw(self.x, self.y, self.width + self.func_sizediff(), self.height + self.func_sizediff())
