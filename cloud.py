@@ -1,5 +1,4 @@
 from pico2d import load_image
-from math import cos, radians
 from random import randint
 
 class Cloud:
@@ -12,17 +11,20 @@ class Cloud:
         self.x = x
         self.y = randint(self.screen_height // 2, self.screen_height)
         self.speed = 1
-        self.theta = randint(1, 360)
+        self.sizediff = randint(0, 10)
         if Cloud.image == None:
             Cloud.image = load_image("cloud.png")
     
     def update(self):
         self.x += self.speed
-        self.theta = (self.theta + 10) % 360
-        if self.x - self.width // 2 > self.screen_width:
-            self.x = randint(-self.screen_width // 2, 0 - self.width)
+        self.sizediff = (self.sizediff + 1) % 11
+        if self.x - (self.width + self.func_sizediff()) // 2 > self.screen_width:
+            self.x = randint(self.screen_width - 500, 0 - self.width)
             self.y = randint(self.screen_height // 2, self.screen_height)
 
     def draw(self):
-        self.image.draw(self.x, self.y, (int)(self.width * (1 + 0.2 * cos(radians(self.theta)))), (int)(self.height * (1 + 0.2 * cos(radians(self.theta)))))
-        # cloud.size * (1 + 0.2 * cos(theta))
+        self.image.draw(self.x, self.y, self.width + self.func_sizediff(), self.height + self.func_sizediff())
+        # self.size + 2 * (5 - (|5 - (0 ~ 10)|))
+    
+    def func_sizediff(self):
+        return 2 * (5 - abs(self.sizediff - 5))    
