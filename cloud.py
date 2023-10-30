@@ -3,12 +3,12 @@ from random import randint
 
 class Cloud:
     image = None
-    def __init__(self, x, screen_width, screen_height):
+    def __init__(self, screen_width, screen_height):
         self.screen_width = screen_width
         self.screen_height = screen_height
         self.width = 48
         self.height = 24
-        self.x = x
+        self.x = randint(self.screen_width - 500, self.screen_width - 1)
         self.y = randint(self.screen_height // 2, self.screen_height)
         self.speed = randint(1, 3)
         self.sizediff = randint(0, 10)
@@ -19,7 +19,7 @@ class Cloud:
         self.x += self.speed
         self.sizediff = (self.sizediff + 1) % 11
         if self.x - (self.width + self.func_sizediff()) // 2 > self.screen_width:
-            self.x = randint(self.screen_width - 500, 0 - self.width)
+            self.x = self.screen_width - 500
             self.y = randint(self.screen_height // 2, self.screen_height)
             self.speed = randint(1, 3)
 

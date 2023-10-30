@@ -34,7 +34,7 @@ def create_world():
     volleyball_net = Volleyball_Net(screen_width, screen_height)
     game_world.add(volleyball_net)
     
-    clouds = [Cloud(random.randint(screen_width - 500, screen_width - 1), screen_width, screen_height) for _ in range(15)]
+    clouds = [Cloud(screen_width, screen_height) for _ in range(15)]
     game_world.objects += clouds
     
 def update_world():
