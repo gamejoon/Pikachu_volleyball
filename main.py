@@ -3,10 +3,12 @@ import random
 from background import Background
 from volleyball_net import Volleyball_Net
 from cloud import Cloud
+from waves import Wave
 import game_world
 
 screen_width = 432
 screen_height = 304
+size_per_space = 16
         
 def handle_events():
     global running
@@ -19,11 +21,12 @@ def handle_events():
         elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
             running = False
 
-def create_world():
+def init():
     global running
     global background
     global volleyball_net
     global clouds
+    global waves
     global game_world
 
     running = True
@@ -37,6 +40,9 @@ def create_world():
     clouds = [Cloud(screen_width, screen_height) for _ in range(15)]
     game_world.objects += clouds
     
+    waves = [Wave(x * size_per_space) for x in range(screen_width // size_per_space)]
+    game_world.objects += waves
+    
 def update_world():
     game_world.update()
     delay(0.05)
@@ -47,7 +53,7 @@ def render_world():
     update_canvas()
 
 open_canvas(screen_width, screen_height)
-create_world()
+init()
 
 while running:
     handle_events()
