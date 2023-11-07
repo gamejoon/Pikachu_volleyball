@@ -26,22 +26,22 @@ def init():
     global background
     global volleyball_net
     global clouds
-    global waves
+    # global waves
     global game_world
 
     running = True
     
     background = Background(screen_width, screen_height)
-    game_world.add(background)
+    game_world.add_object(background)
     
     volleyball_net = Volleyball_Net(screen_width, screen_height)
-    game_world.add(volleyball_net)
+    game_world.add_object(volleyball_net)
     
     clouds = [Cloud(screen_width, screen_height) for _ in range(15)]
-    game_world.objects += clouds
+    game_world.add_objects(clouds)
     
-    waves = [Wave(x * size_per_space) for x in range(screen_width // size_per_space)]
-    game_world.objects += waves
+    # waves = [Wave(x * size_per_space) for x in range(screen_width // size_per_space)]
+    # game_world.objects += waves
     
 def update_world():
     game_world.update()

@@ -1,8 +1,12 @@
 objects = []
 
-def add(o):
+def add_object(o):
     objects.append(o)
-    
+
+def add_objects(o):
+    for object in o:
+        objects.append(object)
+
 def update():
     for o in objects:
         o.update()
