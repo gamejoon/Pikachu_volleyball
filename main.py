@@ -3,7 +3,8 @@ import random
 from background import Background
 from volleyball_net import Volleyball_Net
 from cloud import Cloud
-from waves import Wave
+# from waves import Wave
+from pikachu import Pikachu
 import game_world
 
 screen_width = 432
@@ -42,6 +43,9 @@ def init():
     
     # waves = [Wave(x * size_per_space) for x in range(screen_width // size_per_space)]
     # game_world.objects += waves
+    
+    pikachu = Pikachu('p1')
+    game_world.add_object(pikachu)
     
 def update_world():
     game_world.update()
