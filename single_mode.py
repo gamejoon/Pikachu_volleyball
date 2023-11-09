@@ -14,8 +14,7 @@ screen_height = 304
 size_per_space = 16
 
 def handle_events():
-    game_framework.running
-
+    
     events = get_events()
 
     for event in events:
@@ -26,12 +25,6 @@ def handle_events():
             
 
 def init():
-    global background
-    global volleyball_net
-    global clouds
-    # global waves
-    global game_world
-
     
     background = Background(screen_width, screen_height)
     game_world.add_object(background, 0)

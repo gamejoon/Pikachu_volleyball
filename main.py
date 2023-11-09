@@ -1,5 +1,4 @@
 from pico2d import open_canvas, close_canvas
-import game_world
 import game_framework
 import single_mode as current_mode
 
