@@ -8,10 +8,7 @@ from cloud import Cloud
 # from waves import Wave
 from pikachu import Pikachu
 
-screen_width = 432
-screen_height = 304
-size_per_space = 16
-        
+
 def handle_events():
     global running
 
@@ -22,6 +19,7 @@ def handle_events():
             running = False
         elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
             running = False
+            
 
 def init():
     global running
@@ -48,22 +46,13 @@ def init():
     pikachu = Pikachu('p1')
     game_world.add_object(pikachu)
     
+    
 def update_world():
     game_world.update()
     delay(0.05)
+    
 
 def render_world():
     clear_canvas()
     game_world.render()
     update_canvas()
-
-open_canvas(screen_width, screen_height)
-init()
-
-while running:
-    handle_events()
-    update_world()
-    render_world()
-    # print(game_world.objects)
-
-close_canvas()
