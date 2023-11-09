@@ -1,16 +1,18 @@
-objects = []
+objects = [[], [], []]
 
-def add_object(o):
-    objects.append(o)
+def add_object(o, layer):
+    objects[layer].append(o)
 
-def add_objects(o):
+def add_objects(o, layer):
     for object in o:
-        objects.append(object)
+        objects[layer].append(object)
 
-def update():
-    for o in objects:
-        o.update()
+def update_world():
+    for layer in objects:
+        for o in layer:
+            o.update()
 
-def render():
-    for o in objects:
-        o.draw()
+def render_world():
+    for layer in objects:
+        for o in layer:
+            o.draw()

@@ -34,26 +34,26 @@ def init():
 
     
     background = Background(screen_width, screen_height)
-    game_world.add_object(background)
+    game_world.add_object(background, 0)
     
     volleyball_net = Volleyball_Net(screen_width, screen_height)
-    game_world.add_object(volleyball_net)
+    game_world.add_object(volleyball_net, 1)
     
     clouds = [Cloud(screen_width, screen_height) for _ in range(15)]
-    game_world.add_objects(clouds)
+    game_world.add_objects(clouds, 1)
     
     # waves = [Wave(x * size_per_space) for x in range(screen_width // size_per_space)]
     # game_world.objects += waves
     
     pikachu = Pikachu('p1')
-    game_world.add_object(pikachu)
+    game_world.add_object(pikachu, 2)
     
     
 def update_world():
-    game_world.update()
+    game_world.update_world()
     
 
 def render_world():
     clear_canvas()
-    game_world.render()
+    game_world.render_world()
     update_canvas()
