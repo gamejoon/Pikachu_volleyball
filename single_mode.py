@@ -51,7 +51,6 @@ def init():
     
 def update_world():
     game_world.update()
-    delay(0.05)
     
 
 def render_world():
