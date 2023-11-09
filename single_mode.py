@@ -1,35 +1,37 @@
 from pico2d import *
 
 import game_world
-
 from background import Background
 from volleyball_net import Volleyball_Net
 from cloud import Cloud
 # from waves import Wave
 from pikachu import Pikachu
 
+import game_framework
+
+screen_width = 432
+screen_height = 304
+size_per_space = 16
 
 def handle_events():
-    global running
+    game_framework.running
 
     events = get_events()
 
     for event in events:
         if event.type == SDL_QUIT:
-            running = False
+            game_framework.running = False
         elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
-            running = False
+            game_framework.running = False
             
 
 def init():
-    global running
     global background
     global volleyball_net
     global clouds
     # global waves
     global game_world
 
-    running = True
     
     background = Background(screen_width, screen_height)
     game_world.add_object(background)

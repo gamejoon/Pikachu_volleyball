@@ -1,8 +1,17 @@
 running = None
-stack = None
+current_mode = None
 
 def run(mode):
-    pass
+    global running, current_mode
+    
+    running = True
+    current_mode = mode
+    current_mode.init()
+    
+    while running:
+        current_mode.handle_events()
+        current_mode.update_world()
+        current_mode.render_world()
 
 def quit():
     pass
