@@ -22,10 +22,13 @@ def handle_events():
             game_framework.running = False
         elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
             game_framework.running = False
+        else:
+            pikachu.handle_event(event)
             
 
 def init():
-    
+    global pikachu
+
     background = Background(screen_width, screen_height)
     game_world.add_object(background, 0)
     

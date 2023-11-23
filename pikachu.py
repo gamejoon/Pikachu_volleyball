@@ -71,7 +71,7 @@ class StateMachine:
     def update(self):
         self.current_state.do(self.pikachu)
 
-    def handle_event(self):
+    def handle_event(self, e):
         pass
 
     def draw(self):
@@ -102,6 +102,9 @@ class Pikachu:
     
     def update(self):
         self.state_machine.update()
+
+    def handle_event(self, event):
+        self.state_machine.handle_event(('INPUT', event))
     
     def draw(self):
         self.state_machine.draw()
