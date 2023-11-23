@@ -18,6 +18,23 @@ class Idle:
     def draw(pikachu):
         pikachu.image.clip_draw(pikachu.image_pivot['Idle'][int(pikachu.frame)][0], pikachu.image_pivot['Idle'][int(pikachu.frame)][1], pikachu.image_pivot['Idle'][int(pikachu.frame)][2], pikachu.image_pivot['Idle'][int(pikachu.frame)][3], pikachu.x, pikachu.y)
 
+class Run:
+    @staticmethod
+    def enter(pikachu):
+        pass
+
+    @staticmethod
+    def do(pikachu):
+        pass
+
+    @staticmethod
+    def exit(pikachu):
+        pass
+
+    @staticmethod
+    def draw(pikachu):
+        pass
+
 class StateMachine:
     def __init__(self, pikachu):
         self.pikachu = pikachu
