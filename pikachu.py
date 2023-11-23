@@ -16,7 +16,7 @@ class Idle:
 
     @staticmethod
     def draw(pikachu):
-        pikachu.image.clip_draw(5 + 80 * int(pikachu.frame), 885 - 330, 60, 60, pikachu.x, pikachu.y)
+        pikachu.image.clip_draw(pikachu.image_pivot['Idle'][int(pikachu.frame)][0], pikachu.image_pivot['Idle'][int(pikachu.frame)][1], pikachu.image_pivot['Idle'][int(pikachu.frame)][2], pikachu.image_pivot['Idle'][int(pikachu.frame)][3], pikachu.x, pikachu.y)
 
 class StateMachine:
     def __init__(self, pikachu):
@@ -46,6 +46,17 @@ class Pikachu:
         self.state_machine = StateMachine(self)
         self.state_machine.start()
         self.image = load_image("sprite_sheet.png")
+        self.image_pivot = {'Idle' : ((8, 885 - 327, 61 - 8, 327 - 272),
+                                      (73, 885 - 328, 127 - 73, 328 - 273),
+                                      (139, 885 - 329, 192 - 139, 329 - 274),
+                                      (205, 885 - 328, 259 - 205, 328 - 273),
+                                      (272, 885 - 327, 325 - 272, 327 - 272),
+                                      (272, 885 - 327, 325 - 272, 327 - 272),
+                                      (205, 885 - 328, 259 - 205, 328 - 273),
+                                      (139, 885 - 329, 192 - 139, 329 - 274),
+                                      (73, 885 - 328, 127 - 73, 328 - 273),
+                                      (8, 885 - 327, 61 - 8, 327 - 272)
+                                      )}
     
     def update(self):
         self.state_machine.update()
@@ -54,7 +65,7 @@ class Pikachu:
         self.state_machine.draw()
     
     def func_frame_per_action(self):
-        time_per_action = 0.5
+        time_per_action = 1.2
         action_per_time = 1.0 / time_per_action
-        frame_per_action = 7
-        return (self.frame + action_per_time * frame_per_action * game_framework.frame_time) % 7
+        frame_per_action = 10
+        return (self.frame + action_per_time * frame_per_action * game_framework.frame_time) % 10
