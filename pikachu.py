@@ -28,7 +28,7 @@ def downkey_up(e):
 class Idle:
     @staticmethod
     def enter(pikachu):
-        pass
+        pikachu.dir = 0
 
     @staticmethod
     def do(pikachu):
@@ -42,14 +42,14 @@ class Idle:
     def draw(pikachu):
         pikachu.image.clip_draw(pikachu.image_pivot['Idle'][int(pikachu.frame)][0], pikachu.image_pivot['Idle'][int(pikachu.frame)][1], pikachu.image_pivot['Idle'][int(pikachu.frame)][2], pikachu.image_pivot['Idle'][int(pikachu.frame)][3], pikachu.x, pikachu.y)
 
-class Run:
+class Run_Right:
     @staticmethod
     def enter(pikachu):
-        pass
+        pikachu.dir = 1
 
     @staticmethod
     def do(pikachu):
-        pass
+        pikachu.frame = pikachu.func_frame_per_action()
 
     @staticmethod
     def exit(pikachu):
@@ -57,22 +57,48 @@ class Run:
 
     @staticmethod
     def draw(pikachu):
+        pikachu.image.clip_draw(pikachu.image_pivot['Idle'][int(pikachu.frame)][0], pikachu.image_pivot['Idle'][int(pikachu.frame)][1], pikachu.image_pivot['Idle'][int(pikachu.frame)][2], pikachu.image_pivot['Idle'][int(pikachu.frame)][3], pikachu.x, pikachu.y)
+
+class Run_Left:
+    @staticmethod
+    def enter(pikachu):
+        pikachu.dir = -1
+
+    @staticmethod
+    def do(pikachu):
+        pikachu.frame = pikachu.func_frame_per_action()
+
+    @staticmethod
+    def exit(pikachu):
         pass
+
+    @staticmethod
+    def draw(pikachu):
+        pikachu.image.clip_draw(pikachu.image_pivot['Idle'][int(pikachu.frame)][0], pikachu.image_pivot['Idle'][int(pikachu.frame)][1], pikachu.image_pivot['Idle'][int(pikachu.frame)][2], pikachu.image_pivot['Idle'][int(pikachu.frame)][3], pikachu.x, pikachu.y)
 
 class StateMachine:
     def __init__(self, pikachu):
         self.pikachu = pikachu
         self.current_state = Idle
-        self.transitions = { }
+        self.transitions = {
+            Idle : {right_down : Run_Right, left_down : Run_Left},
+            Run_Right : {right_up : Idle, left_down : Run_Left},
+            Run_Left : {left_up : Idle, right_down : Run_Right}
+        }
     
     def start(self):
         self.current_state.enter(self.pikachu)
-    
+
     def update(self):
         self.current_state.do(self.pikachu)
+        self.pikachu.x += self.pikachu.dir * self.pikachu.speed * game_framework.frame_time
 
     def handle_event(self, e):
-        pass
+        for check_event, next_event in self.transitions[self.current_state].items():
+            if check_event(e):
+                self.current_state.exit(self.pikachu)
+                self.current_state = next_event
+                self.current_state.enter(self.pikachu)
 
     def draw(self):
         self.current_state.draw(self.pikachu)
@@ -84,10 +110,22 @@ class Pikachu:
         self.width = 60
         self.height = 60
         self.frame = 0
+        self.speed = 10
         self.state_machine = StateMachine(self)
         self.state_machine.start()
         self.image = load_image("sprite_sheet.png")
         self.image_pivot = {'Idle' : ((8, 885 - 327, 61 - 8, 327 - 272),
+                                      (73, 885 - 328, 127 - 73, 328 - 273),
+                                      (139, 885 - 329, 192 - 139, 329 - 274),
+                                      (205, 885 - 328, 259 - 205, 328 - 273),
+                                      (272, 885 - 327, 325 - 272, 327 - 272),
+                                      (272, 885 - 327, 325 - 272, 327 - 272),
+                                      (205, 885 - 328, 259 - 205, 328 - 273),
+                                      (139, 885 - 329, 192 - 139, 329 - 274),
+                                      (73, 885 - 328, 127 - 73, 328 - 273),
+                                      (8, 885 - 327, 61 - 8, 327 - 272)
+                                      ),
+                            'Run' : ((8, 885 - 327, 61 - 8, 327 - 272),
                                       (73, 885 - 328, 127 - 73, 328 - 273),
                                       (139, 885 - 329, 192 - 139, 329 - 274),
                                       (205, 885 - 328, 259 - 205, 328 - 273),
