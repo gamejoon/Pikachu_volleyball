@@ -40,7 +40,15 @@ class Idle:
 
     @staticmethod
     def draw(pikachu):
-        pikachu.image.clip_draw(pikachu.image_pivot['Idle'][int(pikachu.frame)][0], pikachu.image_pivot['Idle'][int(pikachu.frame)][1], pikachu.image_pivot['Idle'][int(pikachu.frame)][2], pikachu.image_pivot['Idle'][int(pikachu.frame)][3], pikachu.x, pikachu.y)
+        if pikachu.player == 'p1':
+            pikachu.image.clip_draw(pikachu.image_pivot['Idle'][int(pikachu.frame)][0], pikachu.image_pivot['Idle'][int(pikachu.frame)][1], pikachu.image_pivot['Idle'][int(pikachu.frame)][2], pikachu.image_pivot['Idle'][int(pikachu.frame)][3], pikachu.x, pikachu.y)
+        elif pikachu.player == 'p2':
+            pikachu.image.clip_composite_draw(pikachu.image_pivot['Idle'][int(pikachu.frame)][0],
+                                    pikachu.image_pivot['Idle'][int(pikachu.frame)][1],
+                                    pikachu.image_pivot['Idle'][int(pikachu.frame)][2],
+                                    pikachu.image_pivot['Idle'][int(pikachu.frame)][3], 0, 'h', pikachu.x, pikachu.y, pikachu.image_pivot['Idle'][int(pikachu.frame)][2],
+                                    pikachu.image_pivot['Idle'][int(pikachu.frame)][3])
+
 
 class Run_Right:
     @staticmethod
@@ -57,7 +65,18 @@ class Run_Right:
 
     @staticmethod
     def draw(pikachu):
-        pikachu.image.clip_draw(pikachu.image_pivot['Idle'][int(pikachu.frame)][0], pikachu.image_pivot['Idle'][int(pikachu.frame)][1], pikachu.image_pivot['Idle'][int(pikachu.frame)][2], pikachu.image_pivot['Idle'][int(pikachu.frame)][3], pikachu.x, pikachu.y)
+        if pikachu.player == 'p1':
+            pikachu.image.clip_draw(pikachu.image_pivot['Run_Right'][int(pikachu.frame)][0],
+                                    pikachu.image_pivot['Run_Right'][int(pikachu.frame)][1],
+                                    pikachu.image_pivot['Run_Right'][int(pikachu.frame)][2],
+                                    pikachu.image_pivot['Run_Right'][int(pikachu.frame)][3], pikachu.x, pikachu.y)
+        elif pikachu.player == 'p2':
+            pikachu.image.clip_composite_draw(pikachu.image_pivot['Run_Right'][int(pikachu.frame)][0],
+                                              pikachu.image_pivot['Run_Right'][int(pikachu.frame)][1],
+                                              pikachu.image_pivot['Run_Right'][int(pikachu.frame)][2],
+                                              pikachu.image_pivot['Run_Right'][int(pikachu.frame)][3], 0, 'h', pikachu.x, pikachu.y, pikachu.image_pivot['Run_Right'][int(pikachu.frame)][2],
+                                    pikachu.image_pivot['Run_Right'][int(pikachu.frame)][3])
+
 
 class Run_Left:
     @staticmethod
@@ -74,7 +93,11 @@ class Run_Left:
 
     @staticmethod
     def draw(pikachu):
-        pikachu.image.clip_draw(pikachu.image_pivot['Idle'][int(pikachu.frame)][0], pikachu.image_pivot['Idle'][int(pikachu.frame)][1], pikachu.image_pivot['Idle'][int(pikachu.frame)][2], pikachu.image_pivot['Idle'][int(pikachu.frame)][3], pikachu.x, pikachu.y)
+        if pikachu.player == 'p1':
+            pikachu.image.clip_draw(pikachu.image_pivot['Run_Left'][int(pikachu.frame)][0], pikachu.image_pivot['Run_Left'][int(pikachu.frame)][1], pikachu.image_pivot['Run_Left'][int(pikachu.frame)][2], pikachu.image_pivot['Run_Left'][int(pikachu.frame)][3], pikachu.x, pikachu.y)
+        elif pikachu.player == 'p2':
+            pikachu.image.clip_composite_draw(pikachu.image_pivot['Run_Left'][int(pikachu.frame)][0], pikachu.image_pivot['Run_Left'][int(pikachu.frame)][1], pikachu.image_pivot['Run_Left'][int(pikachu.frame)][2], pikachu.image_pivot['Run_Left'][int(pikachu.frame)][3], 0, 'h', pikachu.x, pikachu.y, pikachu.image_pivot['Run_Left'][int(pikachu.frame)][2],
+                                    pikachu.image_pivot['Run_Left'][int(pikachu.frame)][3])
 
 class StateMachine:
     def __init__(self, pikachu):
@@ -131,17 +154,29 @@ class Pikachu:
                                       (73, 885 - 328, 127 - 73, 328 - 273),
                                       (8, 885 - 327, 61 - 8, 327 - 272)
                                       ),
-                            'Run' : ((8, 885 - 327, 61 - 8, 327 - 272),
-                                      (73, 885 - 328, 127 - 73, 328 - 273),
-                                      (139, 885 - 329, 192 - 139, 329 - 274),
-                                      (205, 885 - 328, 259 - 205, 328 - 273),
-                                      (272, 885 - 327, 325 - 272, 327 - 272),
-                                      (272, 885 - 327, 325 - 272, 327 - 272),
-                                      (205, 885 - 328, 259 - 205, 328 - 273),
-                                      (139, 885 - 329, 192 - 139, 329 - 274),
-                                      (73, 885 - 328, 127 - 73, 328 - 273),
-                                      (8, 885 - 327, 61 - 8, 327 - 272)
-                                      )}
+                            'Run_Right' : ((8, 885 - 327, 61 - 8, 327 - 272),
+                                           (73, 885 - 328, 127 - 73, 328 - 273),
+                                           (139, 885 - 329, 192 - 139, 329 - 274),
+                                           (205, 885 - 328, 259 - 205, 328 - 273),
+                                           (272, 885 - 327, 325 - 272, 327 - 272),
+                                           (272, 885 - 327, 325 - 272, 327 - 272),
+                                           (205, 885 - 328, 259 - 205, 328 - 273),
+                                           (139, 885 - 329, 192 - 139, 329 - 274),
+                                           (73, 885 - 328, 127 - 73, 328 - 273),
+                                           (8, 885 - 327, 61 - 8, 327 - 272)
+                                           ),
+                            'Run_Left': ((8, 885 - 327, 61 - 8, 327 - 272),
+                                         (73, 885 - 328, 127 - 73, 328 - 273),
+                                         (139, 885 - 329, 192 - 139, 329 - 274),
+                                         (205, 885 - 328, 259 - 205, 328 - 273),
+                                         (272, 885 - 327, 325 - 272, 327 - 272),
+                                         (272, 885 - 327, 325 - 272, 327 - 272),
+                                         (205, 885 - 328, 259 - 205, 328 - 273),
+                                         (139, 885 - 329, 192 - 139, 329 - 274),
+                                         (73, 885 - 328, 127 - 73, 328 - 273),
+                                         (8, 885 - 327, 61 - 8, 327 - 272)
+                                         )
+                            }
         self.dir = 0
         self.player = player
     
