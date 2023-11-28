@@ -91,7 +91,12 @@ class StateMachine:
 
     def update(self):
         self.current_state.do(self.pikachu)
-        self.pikachu.x += self.pikachu.dir * self.pikachu.speed * game_framework.frame_time
+        self.pikachu.x += self.pikachu.dir * self.pikachu.func_speed_pps() * game_framework.frame_time
+        if self.pikachu.player == 'p2':
+            if self.pikachu.x - self.pikachu.width // 2 <= 216:
+                self.pikachu.x = 216 + self.pikachu.width // 2
+            elif self.pikachu.x + self.pikachu.width // 2 > 432:
+                self.pikachu.x = 432 - self.pikachu.width // 2
 
     def handle_event(self, e):
         for check_event, next_event in self.transitions[self.current_state].items():
@@ -105,12 +110,13 @@ class StateMachine:
 
 class Pikachu:
     def __init__(self, player):
-        self.x = 304
-        self.y = 54
+        if player == 'p2':
+            self.x = 304
+            self.y = 54
         self.width = 60
         self.height = 60
         self.frame = 0
-        self.speed = 10
+        self.speed = 5
         self.state_machine = StateMachine(self)
         self.state_machine.start()
         self.image = load_image("sprite_sheet.png")
@@ -137,6 +143,7 @@ class Pikachu:
                                       (8, 885 - 327, 61 - 8, 327 - 272)
                                       )}
         self.dir = 0
+        self.player = player
     
     def update(self):
         self.state_machine.update()
@@ -152,3 +159,9 @@ class Pikachu:
         action_per_time = 1.0 / time_per_action
         frame_per_action = 10
         return (self.frame + action_per_time * frame_per_action * game_framework.frame_time) % 10
+
+    def func_speed_pps(self):
+        pixel_per_meter = (10.0 / 0.5) # 10pixel 50cm
+        speed_mps = self.speed
+        speed_pps = (speed_mps * pixel_per_meter)
+        return speed_pps

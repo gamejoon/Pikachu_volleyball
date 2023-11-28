@@ -41,7 +41,7 @@ def init():
     # waves = [Wave(x * size_per_space) for x in range(screen_width // size_per_space)]
     # game_world.objects += waves
     
-    pikachu = Pikachu('p1')
+    pikachu = Pikachu('p2')
     game_world.add_object(pikachu, 2)
     
     
