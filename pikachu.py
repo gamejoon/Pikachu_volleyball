@@ -47,9 +47,9 @@ class Idle:
     @staticmethod
     def draw(pikachu):
         if pikachu.player == 'p1':
-            pikachu.image.clip_draw(pikachu.image_pivot['Idle'][int(pikachu.frame)][0], pikachu.image_pivot['Idle'][int(pikachu.frame)][1], pikachu.image_pivot['Idle'][int(pikachu.frame)][2], pikachu.image_pivot['Idle'][int(pikachu.frame)][3], pikachu.x, pikachu.y)
+            pikachu.image.clip_draw(pikachu.image_pivot[Idle][int(pikachu.frame)][0], pikachu.image_pivot[Idle][int(pikachu.frame)][1], pikachu.image_pivot[Idle][int(pikachu.frame)][2], pikachu.image_pivot[Idle][int(pikachu.frame)][3], pikachu.x, pikachu.y)
         elif pikachu.player == 'p2':
-            pikachu.image.clip_composite_draw(pikachu.image_pivot['Idle'][int(pikachu.frame)][0], pikachu.image_pivot['Idle'][int(pikachu.frame)][1], pikachu.image_pivot['Idle'][int(pikachu.frame)][2], pikachu.image_pivot['Idle'][int(pikachu.frame)][3], 0, 'h', pikachu.x, pikachu.y, pikachu.image_pivot['Idle'][int(pikachu.frame)][2], pikachu.image_pivot['Idle'][int(pikachu.frame)][3])
+            pikachu.image.clip_composite_draw(pikachu.image_pivot[Idle][int(pikachu.frame)][0], pikachu.image_pivot[Idle][int(pikachu.frame)][1], pikachu.image_pivot[Idle][int(pikachu.frame)][2], pikachu.image_pivot[Idle][int(pikachu.frame)][3], 0, 'h', pikachu.x, pikachu.y, pikachu.image_pivot[Idle][int(pikachu.frame)][2], pikachu.image_pivot[Idle][int(pikachu.frame)][3])
 
 
 class Run_Right:
@@ -68,9 +68,9 @@ class Run_Right:
     @staticmethod
     def draw(pikachu):
         if pikachu.player == 'p1':
-            pikachu.image.clip_draw(pikachu.image_pivot['Run_Right'][int(pikachu.frame)][0], pikachu.image_pivot['Run_Right'][int(pikachu.frame)][1], pikachu.image_pivot['Run_Right'][int(pikachu.frame)][2], pikachu.image_pivot['Run_Right'][int(pikachu.frame)][3], pikachu.x, pikachu.y)
+            pikachu.image.clip_draw(pikachu.image_pivot[Run_Right][int(pikachu.frame)][0], pikachu.image_pivot[Run_Right][int(pikachu.frame)][1], pikachu.image_pivot[Run_Right][int(pikachu.frame)][2], pikachu.image_pivot[Run_Right][int(pikachu.frame)][3], pikachu.x, pikachu.y)
         elif pikachu.player == 'p2':
-            pikachu.image.clip_composite_draw(pikachu.image_pivot['Run_Right'][int(pikachu.frame)][0], pikachu.image_pivot['Run_Right'][int(pikachu.frame)][1], pikachu.image_pivot['Run_Right'][int(pikachu.frame)][2], pikachu.image_pivot['Run_Right'][int(pikachu.frame)][3], 0, 'h', pikachu.x, pikachu.y, pikachu.image_pivot['Run_Right'][int(pikachu.frame)][2], pikachu.image_pivot['Run_Right'][int(pikachu.frame)][3])
+            pikachu.image.clip_composite_draw(pikachu.image_pivot[Run_Right][int(pikachu.frame)][0], pikachu.image_pivot[Run_Right][int(pikachu.frame)][1], pikachu.image_pivot[Run_Right][int(pikachu.frame)][2], pikachu.image_pivot[Run_Right][int(pikachu.frame)][3], 0, 'h', pikachu.x, pikachu.y, pikachu.image_pivot[Run_Right][int(pikachu.frame)][2], pikachu.image_pivot[Run_Right][int(pikachu.frame)][3])
 
 
 class Run_Left:
@@ -89,14 +89,14 @@ class Run_Left:
     @staticmethod
     def draw(pikachu):
         if pikachu.player == 'p1':
-            pikachu.image.clip_draw(pikachu.image_pivot['Run_Left'][int(pikachu.frame)][0], pikachu.image_pivot['Run_Left'][int(pikachu.frame)][1], pikachu.image_pivot['Run_Left'][int(pikachu.frame)][2], pikachu.image_pivot['Run_Left'][int(pikachu.frame)][3], pikachu.x, pikachu.y)
+            pikachu.image.clip_draw(pikachu.image_pivot[Run_Left][int(pikachu.frame)][0], pikachu.image_pivot[Run_Left][int(pikachu.frame)][1], pikachu.image_pivot[Run_Left][int(pikachu.frame)][2], pikachu.image_pivot[Run_Left][int(pikachu.frame)][3], pikachu.x, pikachu.y)
         elif pikachu.player == 'p2':
-            pikachu.image.clip_composite_draw(pikachu.image_pivot['Run_Left'][int(pikachu.frame)][0], pikachu.image_pivot['Run_Left'][int(pikachu.frame)][1], pikachu.image_pivot['Run_Left'][int(pikachu.frame)][2], pikachu.image_pivot['Run_Left'][int(pikachu.frame)][3], 0, 'h', pikachu.x, pikachu.y, pikachu.image_pivot['Run_Left'][int(pikachu.frame)][2], pikachu.image_pivot['Run_Left'][int(pikachu.frame)][3])
+            pikachu.image.clip_composite_draw(pikachu.image_pivot[Run_Left][int(pikachu.frame)][0], pikachu.image_pivot[Run_Left][int(pikachu.frame)][1], pikachu.image_pivot[Run_Left][int(pikachu.frame)][2], pikachu.image_pivot[Run_Left][int(pikachu.frame)][3], 0, 'h', pikachu.x, pikachu.y, pikachu.image_pivot[Run_Left][int(pikachu.frame)][2], pikachu.image_pivot[Run_Left][int(pikachu.frame)][3])
 
 class Jump:
     @staticmethod
     def enter(pikachu):
-        pass
+        pikachu.frame = 0
 
     @staticmethod
     def do(pikachu):
@@ -147,14 +147,14 @@ class Pikachu:
         if player == 'p2':
             self.x = 304
             self.y = 54
-        self.width = 60
-        self.height = 60
+        self.width = 64
+        self.height = 64
         self.frame = 0
         self.speed = 5
         self.state_machine = StateMachine(self)
         self.state_machine.start()
         self.image = load_image("sprite_sheet.png")
-        self.image_pivot = {'Idle' : ((8, 885 - 327, 61 - 8, 327 - 272),
+        self.image_pivot = {Idle : ((8, 885 - 327, 61 - 8, 327 - 272),
                                       (73, 885 - 328, 127 - 73, 328 - 273),
                                       (139, 885 - 329, 192 - 139, 329 - 274),
                                       (205, 885 - 328, 259 - 205, 328 - 273),
@@ -165,7 +165,7 @@ class Pikachu:
                                       (73, 885 - 328, 127 - 73, 328 - 273),
                                       (8, 885 - 327, 61 - 8, 327 - 272)
                                       ),
-                            'Run_Right' : ((8, 885 - 327, 61 - 8, 327 - 272),
+                            Run_Right : ((8, 885 - 327, 61 - 8, 327 - 272),
                                            (73, 885 - 328, 127 - 73, 328 - 273),
                                            (139, 885 - 329, 192 - 139, 329 - 274),
                                            (205, 885 - 328, 259 - 205, 328 - 273),
@@ -176,7 +176,7 @@ class Pikachu:
                                            (73, 885 - 328, 127 - 73, 328 - 273),
                                            (8, 885 - 327, 61 - 8, 327 - 272)
                                            ),
-                            'Run_Left': ((8, 885 - 327, 61 - 8, 327 - 272),
+                            Run_Left: ((8, 885 - 327, 61 - 8, 327 - 272),
                                          (73, 885 - 328, 127 - 73, 328 - 273),
                                          (139, 885 - 329, 192 - 139, 329 - 274),
                                          (205, 885 - 328, 259 - 205, 328 - 273),
@@ -199,12 +199,13 @@ class Pikachu:
     
     def draw(self):
         self.state_machine.draw()
-    
+
     def func_frame_per_action(self):
         time_per_action = 1.2
         action_per_time = 1.0 / time_per_action
         frame_per_action = 10
-        return (self.frame + action_per_time * frame_per_action * game_framework.frame_time) % 10
+        return (self.frame + action_per_time * frame_per_action * game_framework.frame_time) % len(self.image_pivot[self.state_machine.current_state])
+
 
     def func_speed_pps(self):
         pixel_per_meter = (10.0 / 0.5) # 10pixel 50cm
