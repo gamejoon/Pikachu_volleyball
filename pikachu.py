@@ -1,5 +1,6 @@
 from pico2d import load_image, SDL_KEYDOWN, SDL_KEYUP, SDLK_RIGHT, SDLK_LEFT, SDLK_UP, SDLK_DOWN, SDLK_RETURN
 import game_framework
+import math
 
 def right_down(e):
     return e[0] == 'INPUT' and e[1].type == SDL_KEYDOWN and e[1].key == SDLK_RIGHT
@@ -33,19 +34,19 @@ def enter_up(e):
 
 class Idle:
     @staticmethod
-    def enter(pikachu):
-        pikachu.dir = 0
+    def enter(pikachu, e):
+        pikachu.xdir = 0
 
     @staticmethod
-    def do(pikachu):
+    def do(pikachu, e):
         pikachu.frame = pikachu.func_frame_per_action()
     
     @staticmethod
-    def exit(pikachu):
-        pass
+    def exit(pikachu, e):
+        if upkey_down(e): pikachu.jumping()
 
     @staticmethod
-    def draw(pikachu):
+    def draw(pikachu, e):
         if pikachu.player == 'p1':
             pikachu.image.clip_draw(pikachu.image_pivot[Idle][int(pikachu.frame)][0], pikachu.image_pivot[Idle][int(pikachu.frame)][1], pikachu.image_pivot[Idle][int(pikachu.frame)][2], pikachu.image_pivot[Idle][int(pikachu.frame)][3], pikachu.x, pikachu.y)
         elif pikachu.player == 'p2':
@@ -54,19 +55,19 @@ class Idle:
 
 class Run_Right:
     @staticmethod
-    def enter(pikachu):
-        pikachu.dir = 1
+    def enter(pikachu, e):
+        pikachu.xdir = 1
 
     @staticmethod
-    def do(pikachu):
+    def do(pikachu, e):
         pikachu.frame = pikachu.func_frame_per_action()
 
     @staticmethod
-    def exit(pikachu):
-        pass
+    def exit(pikachu, e):
+        if upkey_down(e): pikachu.jumping()
 
     @staticmethod
-    def draw(pikachu):
+    def draw(pikachu, e):
         if pikachu.player == 'p1':
             pikachu.image.clip_draw(pikachu.image_pivot[Run_Right][int(pikachu.frame)][0], pikachu.image_pivot[Run_Right][int(pikachu.frame)][1], pikachu.image_pivot[Run_Right][int(pikachu.frame)][2], pikachu.image_pivot[Run_Right][int(pikachu.frame)][3], pikachu.x, pikachu.y)
         elif pikachu.player == 'p2':
@@ -75,49 +76,32 @@ class Run_Right:
 
 class Run_Left:
     @staticmethod
-    def enter(pikachu):
-        pikachu.dir = -1
+    def enter(pikachu, e):
+        pikachu.xdir = -1
 
     @staticmethod
-    def do(pikachu):
+    def do(pikachu, e):
         pikachu.frame = pikachu.func_frame_per_action()
 
     @staticmethod
-    def exit(pikachu):
-        pass
+    def exit(pikachu, e):
+        if upkey_down(e): pikachu.jumping()
 
     @staticmethod
-    def draw(pikachu):
+    def draw(pikachu, e):
         if pikachu.player == 'p1':
             pikachu.image.clip_draw(pikachu.image_pivot[Run_Left][int(pikachu.frame)][0], pikachu.image_pivot[Run_Left][int(pikachu.frame)][1], pikachu.image_pivot[Run_Left][int(pikachu.frame)][2], pikachu.image_pivot[Run_Left][int(pikachu.frame)][3], pikachu.x, pikachu.y)
         elif pikachu.player == 'p2':
             pikachu.image.clip_composite_draw(pikachu.image_pivot[Run_Left][int(pikachu.frame)][0], pikachu.image_pivot[Run_Left][int(pikachu.frame)][1], pikachu.image_pivot[Run_Left][int(pikachu.frame)][2], pikachu.image_pivot[Run_Left][int(pikachu.frame)][3], 0, 'h', pikachu.x, pikachu.y, pikachu.image_pivot[Run_Left][int(pikachu.frame)][2], pikachu.image_pivot[Run_Left][int(pikachu.frame)][3])
-
-class Jump:
-    @staticmethod
-    def enter(pikachu):
-        pikachu.frame = 0
-
-    @staticmethod
-    def do(pikachu):
-        pass
-
-    @staticmethod
-    def exit(pikachu):
-        pass
-
-    @staticmethod
-    def draw(pikachu):
-        pass
 
 class StateMachine:
     def __init__(self, pikachu):
         self.pikachu = pikachu
         self.current_state = Idle
         self.transitions = {
-            Idle : {right_down : Run_Right, left_down : Run_Left},
-            Run_Right : {right_up : Idle, left_down : Run_Left},
-            Run_Left : {left_up : Idle, right_down : Run_Right}
+            Idle : {right_down : Run_Right, left_down : Run_Left, upkey_down : Idle},
+            Run_Right : {right_up : Idle, left_down : Run_Left, upkey_down : Run_Right},
+            Run_Left : {left_up : Idle, right_down : Run_Right, upkey_down : Run_Left}
         }
     
     def start(self):
@@ -125,19 +109,23 @@ class StateMachine:
 
     def update(self):
         self.current_state.do(self.pikachu)
-        self.pikachu.x += self.pikachu.dir * self.pikachu.func_speed_pps() * game_framework.frame_time
+        self.pikachu.x += self.pikachu.xdir * self.pikachu.func_speed_pps() * game_framework.frame_time
         if self.pikachu.player == 'p2':
             if self.pikachu.x - self.pikachu.width // 2 <= 216:
                 self.pikachu.x = 216 + self.pikachu.width // 2
             elif self.pikachu.x + self.pikachu.width // 2 > 432:
                 self.pikachu.x = 432 - self.pikachu.width // 2
+        if self.pikachu.ydir > 0:
+            self.pikachu.y += -math.cos(self.pikachu.ydir) * self.pikachu.func_speed_pps() * game_framework.frame_time
+            self.pikachu.ydir -= math.pi * game_framework.frame_time
+            if self.pikachu.ydir < 0: self.pikachu.ydir = 0
 
     def handle_event(self, e):
         for check_event, next_event in self.transitions[self.current_state].items():
             if check_event(e):
-                self.current_state.exit(self.pikachu)
+                self.current_state.exit(self.pikachu, check_event)
                 self.current_state = next_event
-                self.current_state.enter(self.pikachu)
+                self.current_state.enter(self.pikachu, check_event)
 
     def draw(self):
         self.current_state.draw(self.pikachu)
@@ -188,7 +176,8 @@ class Pikachu:
                                          (8, 885 - 327, 61 - 8, 327 - 272)
                                          )
                             }
-        self.dir = 0
+        self.xdir = 0
+        self.ydir = 0
         self.player = player
     
     def update(self):
@@ -206,9 +195,13 @@ class Pikachu:
         frame_per_action = 10
         return (self.frame + action_per_time * frame_per_action * game_framework.frame_time) % len(self.image_pivot[self.state_machine.current_state])
 
-
     def func_speed_pps(self):
         pixel_per_meter = (10.0 / 0.5) # 10pixel 50cm
         speed_mps = self.speed
         speed_pps = (speed_mps * pixel_per_meter)
         return speed_pps
+
+    def jumping(self):
+        if self.ydir == 0:
+            self.ydir = math.pi
+            print("jump")
