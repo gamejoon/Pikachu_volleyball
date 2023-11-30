@@ -1,6 +1,7 @@
 from pico2d import load_image, SDL_KEYDOWN, SDL_KEYUP, SDLK_RIGHT, SDLK_LEFT, SDLK_UP, SDLK_DOWN, SDLK_RETURN
 import game_framework
 import math
+import json
 
 def right_down(e):
     return e[0] == 'INPUT' and e[1].type == SDL_KEYDOWN and e[1].key == SDLK_RIGHT
@@ -132,40 +133,11 @@ class Pikachu:
         self.state_machine = StateMachine(self)
         self.state_machine.start()
         self.image = load_image("sprite_sheet.png")
-        self.image_pivot = {Idle : ((8, 885 - 327, 61 - 8, 327 - 272),
-                                      (73, 885 - 328, 127 - 73, 328 - 273),
-                                      (139, 885 - 329, 192 - 139, 329 - 274),
-                                      (205, 885 - 328, 259 - 205, 328 - 273),
-                                      (272, 885 - 327, 325 - 272, 327 - 272),
-                                      (272, 885 - 327, 325 - 272, 327 - 272),
-                                      (205, 885 - 328, 259 - 205, 328 - 273),
-                                      (139, 885 - 329, 192 - 139, 329 - 274),
-                                      (73, 885 - 328, 127 - 73, 328 - 273),
-                                      (8, 885 - 327, 61 - 8, 327 - 272)
-                                      ),
-                            Run_Right : ((8, 885 - 327, 61 - 8, 327 - 272),
-                                           (73, 885 - 328, 127 - 73, 328 - 273),
-                                           (139, 885 - 329, 192 - 139, 329 - 274),
-                                           (205, 885 - 328, 259 - 205, 328 - 273),
-                                           (272, 885 - 327, 325 - 272, 327 - 272),
-                                           (272, 885 - 327, 325 - 272, 327 - 272),
-                                           (205, 885 - 328, 259 - 205, 328 - 273),
-                                           (139, 885 - 329, 192 - 139, 329 - 274),
-                                           (73, 885 - 328, 127 - 73, 328 - 273),
-                                           (8, 885 - 327, 61 - 8, 327 - 272)
-                                           ),
-                            Run_Left: ((8, 885 - 327, 61 - 8, 327 - 272),
-                                         (73, 885 - 328, 127 - 73, 328 - 273),
-                                         (139, 885 - 329, 192 - 139, 329 - 274),
-                                         (205, 885 - 328, 259 - 205, 328 - 273),
-                                         (272, 885 - 327, 325 - 272, 327 - 272),
-                                         (272, 885 - 327, 325 - 272, 327 - 272),
-                                         (205, 885 - 328, 259 - 205, 328 - 273),
-                                         (139, 885 - 329, 192 - 139, 329 - 274),
-                                         (73, 885 - 328, 127 - 73, 328 - 273),
-                                         (8, 885 - 327, 61 - 8, 327 - 272)
-                                         )
-                            }
+        self.image_pivot = {}
+        with open('pikachu.json', 'r') as f:
+            pikachu_image_pivot = json.load(f)
+            for p in pikachu_image_pivot:
+                self.image_pivot.__dict__.update(p)
         self.xdir = 0
         self.ydir = 0
         self.player = player
