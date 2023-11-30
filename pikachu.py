@@ -45,13 +45,6 @@ class Idle:
     def exit(pikachu, e):
         if upkey_down(e): pikachu.jumping()
 
-    @staticmethod
-    def draw(pikachu):
-        if pikachu.player == 'p1':
-            pikachu.image.clip_draw(pikachu.image_pivot[Idle][int(pikachu.frame)][0], pikachu.image_pivot[Idle][int(pikachu.frame)][1], pikachu.image_pivot[Idle][int(pikachu.frame)][2], pikachu.image_pivot[Idle][int(pikachu.frame)][3], pikachu.x, pikachu.y)
-        elif pikachu.player == 'p2':
-            pikachu.image.clip_composite_draw(pikachu.image_pivot[Idle][int(pikachu.frame)][0], pikachu.image_pivot[Idle][int(pikachu.frame)][1], pikachu.image_pivot[Idle][int(pikachu.frame)][2], pikachu.image_pivot[Idle][int(pikachu.frame)][3], 0, 'h', pikachu.x, pikachu.y, pikachu.image_pivot[Idle][int(pikachu.frame)][2], pikachu.image_pivot[Idle][int(pikachu.frame)][3])
-
 
 class Run_Right:
     @staticmethod
@@ -66,13 +59,6 @@ class Run_Right:
     def exit(pikachu, e):
         if upkey_down(e): pikachu.jumping()
 
-    @staticmethod
-    def draw(pikachu):
-        if pikachu.player == 'p1':
-            pikachu.image.clip_draw(pikachu.image_pivot[Run_Right][int(pikachu.frame)][0], pikachu.image_pivot[Run_Right][int(pikachu.frame)][1], pikachu.image_pivot[Run_Right][int(pikachu.frame)][2], pikachu.image_pivot[Run_Right][int(pikachu.frame)][3], pikachu.x, pikachu.y)
-        elif pikachu.player == 'p2':
-            pikachu.image.clip_composite_draw(pikachu.image_pivot[Run_Right][int(pikachu.frame)][0], pikachu.image_pivot[Run_Right][int(pikachu.frame)][1], pikachu.image_pivot[Run_Right][int(pikachu.frame)][2], pikachu.image_pivot[Run_Right][int(pikachu.frame)][3], 0, 'h', pikachu.x, pikachu.y, pikachu.image_pivot[Run_Right][int(pikachu.frame)][2], pikachu.image_pivot[Run_Right][int(pikachu.frame)][3])
-
 
 class Run_Left:
     @staticmethod
@@ -86,13 +72,6 @@ class Run_Left:
     @staticmethod
     def exit(pikachu, e):
         if upkey_down(e): pikachu.jumping()
-
-    @staticmethod
-    def draw(pikachu):
-        if pikachu.player == 'p1':
-            pikachu.image.clip_draw(pikachu.image_pivot[Run_Left][int(pikachu.frame)][0], pikachu.image_pivot[Run_Left][int(pikachu.frame)][1], pikachu.image_pivot[Run_Left][int(pikachu.frame)][2], pikachu.image_pivot[Run_Left][int(pikachu.frame)][3], pikachu.x, pikachu.y)
-        elif pikachu.player == 'p2':
-            pikachu.image.clip_composite_draw(pikachu.image_pivot[Run_Left][int(pikachu.frame)][0], pikachu.image_pivot[Run_Left][int(pikachu.frame)][1], pikachu.image_pivot[Run_Left][int(pikachu.frame)][2], pikachu.image_pivot[Run_Left][int(pikachu.frame)][3], 0, 'h', pikachu.x, pikachu.y, pikachu.image_pivot[Run_Left][int(pikachu.frame)][2], pikachu.image_pivot[Run_Left][int(pikachu.frame)][3])
 
 class StateMachine:
     def __init__(self, pikachu):
@@ -128,7 +107,18 @@ class StateMachine:
                 self.current_state.enter(self.pikachu, e)
 
     def draw(self):
-        self.current_state.draw(self.pikachu)
+        if self.pikachu.player == 'p1':
+            self.pikachu.image.clip_draw(self.pikachu.image_pivot[self.current_state][int(self.pikachu.frame)][0],
+                                    self.pikachu.image_pivot[self.current_state][int(self.pikachu.frame)][1],
+                                    self.pikachu.image_pivot[self.current_state][int(self.pikachu.frame)][2],
+                                    self.pikachu.image_pivot[self.current_state][int(self.pikachu.frame)][3], self.pikachu.x, self.pikachu.y)
+        elif self.pikachu.player == 'p2':
+            self.pikachu.image.clip_composite_draw(self.pikachu.image_pivot[self.current_state][int(self.pikachu.frame)][0],
+                                              self.pikachu.image_pivot[self.current_state][int(self.pikachu.frame)][1],
+                                              self.pikachu.image_pivot[self.current_state][int(self.pikachu.frame)][2],
+                                              self.pikachu.image_pivot[self.current_state][int(self.pikachu.frame)][3], 0, 'h', self.pikachu.x,
+                                              self.pikachu.y, self.pikachu.image_pivot[self.current_state][int(self.pikachu.frame)][2],
+                                              self.pikachu.image_pivot[self.current_state][int(self.pikachu.frame)][3])
 
 class Pikachu:
     def __init__(self, player):
@@ -202,6 +192,7 @@ class Pikachu:
         return speed_pps
 
     def jumping(self):
+
         if self.ydir == 0:
             self.ydir = math.pi
             print("jump")
