@@ -23,11 +23,12 @@ def handle_events():
         elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
             game_framework.running = False
         else:
-            pikachu.handle_event(event)
+            pikachu1.handle_event(event)
+            pikachu2.handle_event(event)
             
 
 def init():
-    global pikachu
+    global pikachu1, pikachu2
 
     background = Background(screen_width, screen_height)
     game_world.add_object(background, 0)
@@ -40,9 +41,11 @@ def init():
     
     # waves = [Wave(x * size_per_space) for x in range(screen_width // size_per_space)]
     # game_world.objects += waves
-    
-    pikachu = Pikachu('p2')
-    game_world.add_object(pikachu, 2)
+
+    pikachu1 = Pikachu('p1')
+    pikachu2 = Pikachu('p2')
+    game_world.add_object(pikachu1, 2)
+    game_world.add_object(pikachu2, 2)
     
     
 def update_world():
